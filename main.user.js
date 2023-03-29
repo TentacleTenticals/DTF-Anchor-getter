@@ -177,9 +177,11 @@ class AnchorGetter{
   }
   constructor(editor){
     if(document.getElementById('dtf-anchorGetter')) return;
+    /* Настройка для включения/отключение свёрнутого состояния по-дефолту. */
+    this.isHidden=true;
     this.main=new El().Div({
       path: document.body,
-      cName: 'dtf-window anchor',
+      cName: `dtf-window anchor${this.isHidden ? ' hidden' : ''}`,
       id: 'dtf-anchorGetter',
       rtn: []
     });
