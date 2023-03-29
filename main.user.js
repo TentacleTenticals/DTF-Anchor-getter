@@ -16,6 +16,7 @@
 /* jshint esversion:8 */
 
 (() => {
+  const lazyMode = true;
 
 class AnchorGetter{
   Group({path, text, anchor, link, editor}){
@@ -181,7 +182,7 @@ class AnchorGetter{
     this.isHidden=true;
     this.main=new El().Div({
       path: document.body,
-      cName: `dtf-window anchor${this.isHidden ? ' hidden' : ''}`,
+      cName: `dtf-window anchor${this.isHidden && !editor ? ' hidden' : ''}`,
       id: 'dtf-anchorGetter',
       rtn: []
     });
@@ -279,6 +280,19 @@ class AnchorGetter{
 `;
 
 let css = `
+.dtf-achorLazyBtn {
+  position: fixed;
+  background-color: rgb(0 0 0);
+  color: rgb(255 255 255);
+  top: 54px;
+  left: 253px;
+  margin: 2px 0 0 6px;
+  font-size: 13px;
+  z-index: 100;
+  box-shadow: 0 0 2px 1px rgb(0 0 0);
+  cursor: pointer;
+}
+
 .anchor {
   position: fixed;
   width: 250px;
@@ -423,7 +437,7 @@ let css = `
   new El().Css('DTF-core', dtfCore, true);
   new El().Css('DTF-anchor', css);
 
-  onPageLoad(() => {
+  if(!lazyMode) onPageLoad(() => {
     if(document.getElementById('dtf-anchorGetter')) document.getElementById('dtf-anchorGetter').remove();
     if(getPageType(document.location.href) === 'editor'){
       new AnchorGetter(true);
@@ -436,4 +450,25 @@ let css = `
       }
     }
   });
+  else
+  if(lazyMode){
+    new El().Button({
+      path: document.body,
+      cName: 'dtf-achorLazyBtn',
+      text: '🔃',
+      onclick: () => {
+        if(document.getElementById('dtf-anchorGetter')) document.getElementById('dtf-anchorGetter').remove();
+          if(getPageType(document.location.href) === 'editor'){
+            new AnchorGetter(true);
+        }else
+        if(getPageType(document.location.href) === 'topics'){
+          for(let i = 0, arr = document.querySelectorAll(`.content--full a`); i < arr.length; i++){
+            if(arr[i].className && arr[i].classList.value.match(/content__anchor/)){
+              new AnchorGetter();
+            }
+          }
+        }
+      }
+    })
+  }
 })();
