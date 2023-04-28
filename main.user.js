@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       Tentacle Tenticals
-// @version     1.0.3
+// @version     1.0.4
 // @author      Tentacle Tenticals
 // @description Скрипт для получения якоре (anchor)
 // @homepage    https://github.com/TentacleTenticals/DTF-Anchor-getter
@@ -381,7 +381,7 @@ let css = `
     }}
   };
 
-  new Css('DTF-core', dtfCoreCSS, true);
+  new El().Css('DTF-core', dtfCoreCSS, true);
   new El().Css('DTF-anchor', css);
 
   if(!lazyMode) onPageLoad(() => {
