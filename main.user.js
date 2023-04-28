@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       Tentacle Tenticals
-// @version     1.0.4
+// @version     1.0.5
 // @author      Tentacle Tenticals
 // @description Скрипт для получения якоре (anchor)
 // @homepage    https://github.com/TentacleTenticals/DTF-Anchor-getter
