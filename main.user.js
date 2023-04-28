@@ -3,7 +3,7 @@
 // @namespace   https://github.com/TentacleTenticals/
 // @match       https://dtf.ru/*
 // @grant       Tentacle Tenticals
-// @version     1.0
+// @version     1.0.3
 // @author      Tentacle Tenticals
 // @description Скрипт для получения якоре (anchor)
 // @homepage    https://github.com/TentacleTenticals/DTF-Anchor-getter
@@ -11,12 +11,13 @@
 // @downloadURL https://github.com/TentacleTenticals/DTF-Anchor-getter/raw/master/main.user.js
 //
 // @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/libs/splitCls/div_btn_css.js
+// @require     https://github.com/TentacleTenticals/dtf-libs-2.0/raw/main/libs/settings/css/dtfCore.js
 // @license MIT
 // ==/UserScript==
 /* jshint esversion:8 */
 
 (() => {
-  const lazyMode = true;
+  const lazyMode = false;
 
 class AnchorGetter{
   Group({path, text, anchor, link, editor}){
@@ -46,7 +47,7 @@ class AnchorGetter{
       new El().Button({
         path: btns,
         cName: 'btn',
-        text: '📛',
+        text: '📛\uFE0E',
         onclick: () => {
           navigator.clipboard.writeText(text);
         }
@@ -54,7 +55,7 @@ class AnchorGetter{
       new El().Button({
         path: btns,
         cName: 'btn',
-        text: '🔗',
+        text: '🔗\uFE0E',
         onclick: () => {
           navigator.clipboard.writeText(`#${anchor}`);
         }
@@ -63,7 +64,7 @@ class AnchorGetter{
     new El().Button({
       path: btns,
       cName: 'btn',
-      text: '↪️',
+      text: '↪️\uFE0E',
       onclick: () => {
         link.scrollIntoView();
       }
@@ -209,7 +210,7 @@ class AnchorGetter{
       new El().Button({
         path: this.mainCont,
         cName: 'getter',
-        text: 'Получить список ⚓',
+        text: 'Получить список ⚓\uFE0E',
         onclick: () => {
           if(this.list.children.length > 0) this.list.replaceChildren();
           this.anchorSearch(editor);
@@ -224,60 +225,6 @@ class AnchorGetter{
     if(!editor) this.linksSearch();
   }
 };
-
-  let dtfCore = `
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500&display=swap');
-
-.dtf-window {
-  display: flex;
-  position: absolute;
-  flex-direction: column;
-  width: max-content;
-  background-color: black;
-  top: 100%;
-  padding: 3px;
-  margin: 5px 0 0 0;
-  border-radius: 2px;
-  box-shadow: 0px 0px 3px 0px rgb(0 0 0);
-  z-index: 15;
-}
-.dtf-window .header {
-  text-align: center;
-  color: rgb(255, 255, 255);
-  background-color: rgb(54 43 43);
-  border-radius: 2px;
-  margin: 0 0 5px 0;
-  box-shadow: inset 0px 0px 2px 0px rgb(173 171 171);
-  cursor: pointer;
-}
-.dtf-window .header .label {
-  font-size: 13px;
-  font-family: 'Chakra Petch', sans-serif;
-  letter-spacing: 0.5px;
-}
-.dtf-window .header .label::before {
-  display: inline-block;
-  content: '';
-  color: black;
-  top: -4px;
-  left: -10px;
-  width: 20%;
-  height: 1px;
-  position: relative;
-  box-shadow: 0px 0px 1px 1px rgb(185 0 87);
-}
-.dtf-window .header .label::after {
-  display: inline-block;
-  content: '';
-  color: black;
-  top: -4px;
-  right: -10px;
-  width: 20%;
-  height: 1px;
-  position: relative;
-  box-shadow: 0px 0px 1px 1px rgb(185 0 87);
-}
-`;
 
 let css = `
 .dtf-achorLazyBtn {
@@ -434,7 +381,7 @@ let css = `
     }}
   };
 
-  new El().Css('DTF-core', dtfCore, true);
+  new Css('DTF-core', dtfCoreCSS, true);
   new El().Css('DTF-anchor', css);
 
   if(!lazyMode) onPageLoad(() => {
@@ -455,7 +402,7 @@ let css = `
     new El().Button({
       path: document.body,
       cName: 'dtf-achorLazyBtn',
-      text: '🔃',
+      text: '🔃\uFE0E',
       onclick: () => {
         if(document.getElementById('dtf-anchorGetter')) document.getElementById('dtf-anchorGetter').remove();
           if(getPageType(document.location.href) === 'editor'){
